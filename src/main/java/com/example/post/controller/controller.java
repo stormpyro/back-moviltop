@@ -11,6 +11,7 @@ import java.util.UUID;
 import com.example.post.database.MongoConnection;
 import com.example.post.models.Category;
 import com.example.post.models.Errors;
+import com.example.post.models.Mobile;
 import com.example.post.models.Movies;
 import com.example.post.models.Session;
 import com.example.post.models.UserLogin;
@@ -44,6 +45,15 @@ public class controller {
         map.put("hello", "world");
 
         return ResponseEntity.ok().body(map);
+    }
+
+    @GetMapping("getmobiles")
+    public ResponseEntity<Object> GetMobiles() {
+        MongoCollection<Document> c = db.getCollection("Mobiles");
+        Document query = new Document();
+        List<Document> allMobiles = new ArrayList<>();
+        c.find(query).into(allMobiles);
+        return ResponseEntity.ok().body(allMobiles);
     }
 
     @PostMapping("login")
