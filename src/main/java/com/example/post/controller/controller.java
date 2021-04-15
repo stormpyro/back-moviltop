@@ -11,7 +11,6 @@ import java.util.UUID;
 import com.example.post.database.MongoConnection;
 import com.example.post.models.Category;
 import com.example.post.models.Errors;
-import com.example.post.models.Mobile;
 import com.example.post.models.Movies;
 import com.example.post.models.Session;
 import com.example.post.models.UserLogin;
