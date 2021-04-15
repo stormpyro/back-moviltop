@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.example.post.database.MongoConnection;
+import com.example.post.models.Category;
 import com.example.post.models.Errors;
+import com.example.post.models.Movies;
 import com.example.post.models.Session;
 import com.example.post.models.UserLogin;
 import com.example.post.models.UserLogout;
@@ -33,6 +35,8 @@ public class controller {
     private MongoConnection mongo = new MongoConnection("tOTq2hBNZTACT1fg", "Tmobile");
     private MongoDatabase db = mongo.initClient().getDatabase("Tmobile");
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    private ArrayList<Movies> ArrMovies = new ArrayList<Movies>();
+    private ArrayList<Category> ArrCategories = new ArrayList<Category>();
 
     @GetMapping("test")
     public ResponseEntity<Object> Test() {
@@ -145,6 +149,30 @@ public class controller {
         System.out.println("Session not found");
         Errors err = new Errors(401, "You are an unauthorized user.");
         return ResponseEntity.status(err.getStatusCode()).body(err);
-
     }
+
+    @PostMapping("addmovies")
+    public ResponseEntity<Object> PostMovie(@RequestBody Movies mv) {
+        mv.setId(UUID.randomUUID());
+        ArrMovies.add(mv);
+        return ResponseEntity.ok().body(mv);
+    }
+
+    @GetMapping("getmovies")
+    public ResponseEntity<Object> GetMovies() {
+        return ResponseEntity.ok().body(ArrMovies);
+    }
+
+    @PostMapping("addcategory")
+    public ResponseEntity<Object> PostCategory(@RequestBody Category ct) {
+        ct.setId(UUID.randomUUID());
+        ArrCategories.add(ct);
+        return ResponseEntity.ok().body(ct);
+    }
+
+    @GetMapping("getcategories")
+    public ResponseEntity<Object> GetCategories() {
+        return ResponseEntity.ok().body(ArrCategories);
+    }
+
 }
